@@ -10,8 +10,7 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
-
-
+#include <cmath>
 
 class SortingAnalytics {
 public:
@@ -34,7 +33,32 @@ public:
     
     static void print()
     {
-        std::cout << "accesses: " << accesses << " comparisons: " << comparisons << "\n";
+        std::cout << "accesses: " << accesses << "\ncomparisons: " << comparisons << "\n";
+    }
+    static void approximateBigO(int items)
+    {
+        int y = accesses + comparisons;
+        if (y < items) {
+            std::cout << "O(n)\n";
+        }
+        else if (y < (items * log(items))) {
+            std::cout << "O(n log n)\n";
+        }
+        else if (y < (items * log(items) * 3)) {
+            std::cout << "O(n3 log n)\n";
+        }
+        else if (y < (items * log(items) * 5)) {
+            std::cout << "O(n5 log n)\n";
+        }
+        else if (y < (items * items)) {
+            std::cout << "O(n ^ 2)\n";
+        }
+        else if (y < pow(2, items)) {
+            std::cout << "O(2 ^ n)\n";
+        }
+        else {
+            std::cout << "O Terrible\n";
+        }
     }
 private:
     static int accesses;
@@ -285,7 +309,6 @@ void testIsSorted(std::vector<T> & array)
 
 
 
-
 int main(int argc, const char * argv[])
 {
     // insert code here...
@@ -293,11 +316,16 @@ int main(int argc, const char * argv[])
 //    std::vector<int> ar = { 64, 25, 12, 22, 11, 100, 125, 1212, 0, 1};
     std::vector<int> ar = generateRandom<int>(500);
     
-    quickSort(ar);
-//    cocktailSort(ar);
+//    bubbleSort(ar);
     
+//    selectionSort(ar);
+//    cocktailSort(ar);
+//    insertionSort(ar);
+    cycleSort(ar);
+//    quickSort(ar);
     SortingAnalytics::print();
-    testIsSorted(ar);
+    SortingAnalytics::approximateBigO(500);
+//    testIsSorted(ar);
 //    for (auto i : ar) {
 //        std::cout << i << ", ";
 //    }
